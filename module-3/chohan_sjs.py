@@ -6,13 +6,16 @@ Tags: short, beginner, game"""
 """
 This file was updated by Samuel Sidzyik
 CSD-325 Module 3.2
-01/18/26
+01/18/26, 01/21/26
 """
 
 import random, sys
 
 JAPANESE_NUMBERS = {1: 'ICHI', 2: 'NI', 3: 'SAN',
                     4: 'SHI', 5: 'GO', 6: 'ROKU'}
+
+''' Created Lucky Numbers'''
+LUCKY_NUMBERS = (2,7)
 
 print('''Cho-Han, by Al Sweigart al@inventwithpython.com
 
@@ -24,7 +27,8 @@ dice total to an even (cho) or odd (han) number.
 purse = 5000
 while True:  # Main game loop.
     # Place your bet:
-    print('You have', purse, 'mon. How much do you bet? (or QUIT)')
+    ''' Destroyed this prompt....'''
+    print('sjs:')
     while True:
         pot = input('> ')
         if pot.upper() == 'QUIT':
@@ -42,6 +46,12 @@ while True:  # Main game loop.
     # Roll the dice.
     dice1 = random.randint(1, 6)
     dice2 = random.randint(1, 6)
+
+    '''Add text for notifying user of lucky numbers'''
+    print(F'Todays special numbers are {LUCKY_NUMBERS[0]} & {LUCKY_NUMBERS[1]}.')
+    print('If these are revealed you will automatically win 10 mon.')
+    print('Are you ready?')
+    print()
 
     print('The dealer swirls the cup and you hear the rattle of dice.')
     print('The dealer slams the cup on the floor, still covering the')
@@ -62,6 +72,12 @@ while True:  # Main game loop.
     print('The dealer lifts the cup to reveal:')
     print('  ', JAPANESE_NUMBERS[dice1], '-', JAPANESE_NUMBERS[dice2])
     print('    ', dice1, '-', dice2)
+    
+    '''Adds possibility to win on lucky numbers'''
+    if (dice1 + dice1) in LUCKY_NUMBERS:
+        print('Lucky day! You take 10 mon.')
+        purse = purse + 10
+        print()
 
     # Determine if the player won:
     rollIsEven = (dice1 + dice2) % 2 == 0
@@ -76,6 +92,7 @@ while True:  # Main game loop.
     if playerWon:
         print('You won! You take', pot, 'mon.')
         purse = purse + pot  # Add the pot from player's purse.
+        '''Adjust house cut to 12%'''
         print('The house collects a', pot // 12, 'mon fee.')
         purse = purse - (pot // 12)  # The house fee is 10%.
     else:
